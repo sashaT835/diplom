@@ -7,10 +7,24 @@ import { RealtimeTopics } from "../realtime/realtime-topics";
 
 @Injectable()
 export class UsersService {
+  private readonly baseUrl = process.env.BASE_URL || "http://localhost:3001";
+
   constructor(
     private prisma: PrismaService,
     private readonly realtimeGateway: RealtimeGateway
   ) {}
+
+  private formatImageUrl(image: string | null | undefined): string | null {
+    if (!image) {
+      return null;
+    }
+
+    if (image.startsWith("http://") || image.startsWith("https://")) {
+      return image;
+    }
+
+    return `${this.baseUrl}${image}`;
+  }
 
   async getAllUsers() {
     const users = await this.prisma.user.findMany({
@@ -70,7 +84,15 @@ export class UsersService {
         product: { select: { id: true, name: true, image: true, price: true } },
       },
     });
-    return purchases;
+    return purchases.map((purchase) => ({
+      ...purchase,
+      product: purchase.product
+        ? {
+            ...purchase.product,
+            image: this.formatImageUrl(purchase.product.image),
+          }
+        : null,
+    }));
   }
 
   async getProfile(userId: number) {

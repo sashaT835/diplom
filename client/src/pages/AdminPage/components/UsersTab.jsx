@@ -161,22 +161,21 @@ export default function UsersTab() {
                 <p className={styles.noOrders}>Нет оформленных заказов</p>
               ) : (
                 <div className={styles.ordersList}>
-                  {purchases.map((p) => (
-                    <div key={p.id} className={styles.orderItem}>
-                      {p.product?.image && (
-                        <div className={styles.orderThumb}>
-                          <img src={p.product.image} alt={p.product.name} />
-                        </div>
-                      )}
-                      <div className={styles.orderInfo}>
-                        <span className={styles.orderName}>{p.product?.name || "Товар удалён"}</span>
-                        <span className={styles.orderMeta}>
+                  {purchases.map((p) => (<div key={p.id} className={styles.orderItem}>
+                        {p.product?.image && (
+                            <div className={styles.orderThumb}>
+                              <img src={p.product.image} alt={p.product.name} />
+                            </div>
+                        )}
+                        <div className={styles.orderInfo}>
+                          <span className={styles.orderName}>{p.product?.name || "Товар удалён"}</span>
+                          <span className={styles.orderMeta}>
                           {p.quantity} шт. &middot; {p.totalPrice > 0 ? `${p.totalPrice} ₽` : `${(p.product?.price || 0) * p.quantity} ₽`}
                         </span>
-                      </div>
-                      <span className={styles.orderDate}>{formatDate(p.createdAt)}</span>
-                    </div>
-                  ))}
+                        </div>
+                        <span className={styles.orderDate}>{formatDate(p.createdAt)}</span>
+                      </div>)
+                  )}
                 </div>
               )}
             </div>

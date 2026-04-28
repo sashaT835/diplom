@@ -50,6 +50,7 @@
 .cartWrapper {
   position: relative;
   display: inline-block;
+  top: 2px
 }
 
 .cartBadge {
