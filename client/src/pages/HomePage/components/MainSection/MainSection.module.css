@@ -1,0 +1,112 @@
+.mainSection {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+}
+.background {
+  width: 100%;
+  height: 350px;
+  position: absolute;
+  top: 35%;
+  left: 0;
+  opacity: 0.1;
+  z-index: 0;
+  pointer-events: none;
+}
+.title {
+  max-width: 70%;
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 52px;
+  color: var(--color-white);
+}
+.subtitle {
+  max-width: 70%;
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 24px;
+  color: var(--color-white);
+  margin-top: 20px;
+  margin-bottom: 100px;
+}
+.button {
+  cursor: pointer;
+  margin-top: 100px;
+  border-radius: 4px;
+  padding: 20px 40px;
+  background-color: var(--color-accent);
+  outline: none;
+  border: none;
+  color: var(--color-white);
+  font-family: var(--font-body);
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: var(--color-accent-hover);
+}
+
+/* Планшеты */
+@media (max-width: 1024px) {
+  .mainSection {
+    padding-top: 0;
+  }
+  .title {
+    max-width: 85%;
+    font-size: 42px;
+  }
+  .subtitle {
+    max-width: 85%;
+    font-size: 20px;
+  }
+  .button {
+    margin-top: 60px;
+  }
+}
+
+/* Мобильные устройства */
+@media (max-width: 768px) {
+  .mainSection {
+    padding-top: 0;
+    height: auto;
+    min-height: 100vh;
+  }
+  .background {
+    height: 250px;
+  }
+  .title {
+    max-width: 100%;
+    font-size: 32px;
+  }
+  .subtitle {
+    max-width: 100%;
+    font-size: 18px;
+    margin-top: 16px;
+  }
+  .button {
+    margin-top: 40px;
+    padding: 16px 32px;
+    font-size: 14px;
+  }
+}
+
+/* Маленькие телефоны */
+@media (max-width: 480px) {
+  .mainSection {
+    padding-top: 60px;
+  }
+  .title {
+    font-size: 24px;
+  }
+  .subtitle {
+    font-size: 16px;
+  }
+  .button {
+    width: 100%;
+    margin-top: 30px;
+    padding: 14px 24px;
+  }
+}

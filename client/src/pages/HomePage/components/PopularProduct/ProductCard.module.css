@@ -1,0 +1,79 @@
+.card {
+  margin-bottom: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  cursor: pointer;
+  transition: transform 0.2s;
+  img {
+    width: 280px;
+    height: 280px;
+  }
+  p {
+    padding-left: 30px;
+    font-family: var(--font-body);
+    font-weight: 200;
+    font-size: 16px;
+    color: var(--color-text-dark);
+  }
+  h2 {
+    padding-left: 30px;
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: 20px;
+    color: var(--color-text-dark);
+  }
+}
+
+.card:hover {
+  transform: translateY(-4px);
+}
+
+/* Планшеты */
+@media (max-width: 1024px) {
+  .card img {
+    width: 250px;
+    height: 250px;
+  }
+}
+
+/* Мобильные устройства */
+@media (max-width: 768px) {
+  .card {
+    margin-bottom: 30px;
+  }
+  .card img {
+    width: 220px;
+    height: 220px;
+  }
+  .card p {
+    padding-left: 20px;
+    font-size: 14px;
+  }
+  .card h2 {
+    padding-left: 20px;
+    font-size: 18px;
+  }
+}
+
+/* Маленькие телефоны */
+@media (max-width: 480px) {
+  .card {
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 340px;
+  }
+  .card img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+  }
+  .card p {
+    padding-left: 15px;
+    font-size: 14px;
+  }
+  .card h2 {
+    padding-left: 15px;
+    font-size: 16px;
+  }
+}

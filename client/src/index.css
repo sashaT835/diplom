@@ -1,0 +1,64 @@
+@font-face {
+  font-family: "Days Sans Black";
+  src: url("/fonts/dayssansblack.ttf") format("truetype");
+  font-weight: 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Intro";
+  src: url("/fonts/intro-book.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Intro";
+  src: url("/fonts/intro_regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+:root {
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-text-dark: #444b58;
+  --color-accent: #f14f4f;
+  --color-accent-hover: #d63f3f;
+
+  --font-heading: "Days Sans Black", sans-serif;
+  --font-body: "Intro", sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: var(--font-body);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Планшеты */
+@media (max-width: 1024px) {
+  .container {
+    padding: 0 30px;
+  }
+}
+
+/* Мобильные устройства */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 20px;
+  }
+}
+
+/* Маленькие телефоны */
+@media (max-width: 480px) {
+  .container {
+    padding: 0 15px;
+  }
+}

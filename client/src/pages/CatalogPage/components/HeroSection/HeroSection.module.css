@@ -1,0 +1,96 @@
+.wrapper {
+  position: relative;
+}
+
+.headerWrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+}
+
+.heroSection {
+  background-image: url("/img/bgSecondPage.png");
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+  padding-top: 350px;
+  padding-bottom: 100px;
+  min-height: 100vh;
+  position: relative;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  max-width: 800px;
+}
+
+.title {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 52px;
+  line-height: 140%;
+  color: #fff;
+  margin: 0 0 20px 0;
+}
+
+.subtitle {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 140%;
+  color: #fff;
+  margin: 0;
+}
+
+/* Планшеты */
+@media (max-width: 1024px) {
+  .heroSection {
+    padding-top: 280px;
+    padding-bottom: 80px;
+    min-height: 90vh;
+  }
+
+  .title {
+    font-size: 42px;
+  }
+
+  .subtitle {
+    font-size: 18px;
+  }
+}
+
+/* Мобильные устройства */
+@media (max-width: 768px) {
+  .heroSection {
+    padding-top: 200px;
+    padding-bottom: 60px;
+    min-height: 80vh;
+  }
+
+  .title {
+    font-size: 32px;
+  }
+
+  .subtitle {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .heroSection {
+    padding-top: 150px;
+    padding-bottom: 40px;
+    min-height: 70vh;
+  }
+
+  .title {
+    font-size: 28px;
+  }
+
+  .subtitle {
+    font-size: 14px;
+  }
+}

@@ -1,0 +1,75 @@
+.title {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 45px;
+  text-align: center;
+  color: var(--color-text-dark);
+}
+.card_container {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  margin-top: 50px;
+}
+
+.loader {
+  text-align: center;
+  padding: 60px 20px;
+  margin-top: 50px;
+}
+
+.loader p {
+  font-family: var(--font-body);
+  font-size: 18px;
+  color: #333;
+  margin: 0;
+}
+
+.error {
+  text-align: center;
+  padding: 60px 20px;
+  margin-top: 50px;
+  border-radius: 8px;
+  background: #fff3f3;
+  border: 1px solid #ffcdd2;
+}
+
+.error p {
+  font-family: var(--font-body);
+  font-size: 18px;
+  color: #d32f2f;
+  margin: 0;
+}
+
+/* Планшеты */
+@media (max-width: 1024px) {
+  .title {
+    font-size: 38px;
+  }
+  .card_container {
+    gap: 20px;
+  }
+}
+
+/* Мобильные устройства */
+@media (max-width: 768px) {
+  .title {
+    font-size: 32px;
+  }
+  .card_container {
+    margin-top: 30px;
+    gap: 15px;
+  }
+}
+
+/* Маленькие телефоны */
+@media (max-width: 480px) {
+  .title {
+    font-size: 26px;
+    padding: 0 20px;
+  }
+  .card_container {
+    margin-top: 20px;
+  }
+}

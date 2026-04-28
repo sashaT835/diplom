@@ -1,0 +1,243 @@
+.footer {
+  background-color: #484283;
+  padding: 60px 0 30px;
+  margin-top: 80px;
+}
+
+.footerContent {
+  display: flex;
+  justify-content: space-between;
+  gap: 60px;
+  margin-bottom: 40px;
+}
+
+.logoSection {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.logoBlock {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logoBlock img {
+  width: 50px;
+  height: 50px;
+}
+
+.logoBlock h2 {
+  font-family: var(--font-heading);
+  font-weight: 900;
+  font-size: 28px;
+  color: var(--color-white);
+  margin: 0;
+}
+
+.contactInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--color-white);
+  margin: 0;
+}
+
+.contactInfo p {
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--color-white);
+  margin: 0;
+  line-height: 140%;
+}
+
+.phone {
+  margin-top: 8px;
+}
+
+.helpSection {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 450px;
+}
+
+.helpSection h3 {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 28px;
+  color: var(--color-white);
+  margin: 0;
+}
+
+.helpSection p {
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--color-white);
+  margin: 0;
+  line-height: 160%;
+}
+
+.form {
+  margin-top: 10px;
+}
+
+.divider {
+  width: 1px;
+  background-color: rgba(255, 255, 255, 0.3);
+  align-self: stretch;
+}
+
+.navSection {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.navSection a {
+  font-family: var(--font-body);
+  font-size: 16px;
+  color: var(--color-white);
+  text-decoration: none;
+  transition: opacity 0.3s ease;
+}
+
+.navSection a:hover {
+  opacity: 0.8;
+}
+
+.copyright {
+  text-align: center;
+  padding-top: 30px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Планшеты */
+@media (max-width: 1024px) {
+  .footer {
+    padding: 50px 0 25px;
+  }
+
+  .footerContent {
+    gap: 40px;
+  }
+
+  .logoBlock h2 {
+    font-size: 24px;
+  }
+
+  .helpSection {
+    max-width: 380px;
+  }
+
+  .helpSection h3 {
+    font-size: 24px;
+  }
+}
+
+/* Мобильные устройства */
+@media (max-width: 768px) {
+  .footer {
+    padding: 40px 0 20px;
+    margin-top: 60px;
+  }
+
+  .footerContent {
+    flex-direction: column;
+    gap: 35px;
+  }
+
+  .logoBlock img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .logoBlock h2 {
+    font-size: 22px;
+  }
+
+  .helpSection {
+    max-width: 100%;
+  }
+
+  .divider {
+    display: none;
+  }
+
+  .helpSection h3 {
+    font-size: 22px;
+  }
+
+  .helpSection p {
+    font-size: 14px;
+  }
+
+  .navSection {
+    gap: 16px;
+  }
+
+  .navSection a {
+    font-size: 15px;
+  }
+
+  .copyright {
+    font-size: 12px;
+    padding-top: 25px;
+  }
+}
+
+/* Маленькие телефоны */
+@media (max-width: 480px) {
+  .footer {
+    padding: 30px 0 15px;
+  }
+
+  .footerContent {
+    gap: 30px;
+  }
+
+  .logoBlock img {
+    width: 35px;
+    height: 35px;
+  }
+
+  .logoBlock h2 {
+    font-size: 20px;
+  }
+
+  .contactInfo p {
+    font-size: 13px;
+  }
+
+  .helpSection h3 {
+    font-size: 20px;
+  }
+
+  .helpSection p {
+    font-size: 13px;
+  }
+
+  .button {
+    padding: 12px 18px;
+    font-size: 14px;
+  }
+
+  .navSection a {
+    font-size: 14px;
+  }
+
+  .copyright {
+    font-size: 11px;
+  }
+}

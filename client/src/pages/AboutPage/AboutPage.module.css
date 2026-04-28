@@ -1,0 +1,10 @@
+.aboutPage {
+  background-color: #484283;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.aboutPage main {
+  flex: 1;
+}
