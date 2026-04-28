@@ -93,6 +93,23 @@ export default function Header() {
     };
   }, [isMenuOpen]);
 
+  useEffect(() => {
+    const handleOpenAuthModal = () => {
+      openAuthModal();
+    };
+
+    window.addEventListener("openAuthModal", handleOpenAuthModal);
+
+    if (sessionStorage.getItem("forceOpenAuthModal") === "1") {
+      sessionStorage.removeItem("forceOpenAuthModal");
+      openAuthModal();
+    }
+
+    return () => {
+      window.removeEventListener("openAuthModal", handleOpenAuthModal);
+    };
+  }, []);
+
   return (
     <div className="container">
       {isMenuOpen && (

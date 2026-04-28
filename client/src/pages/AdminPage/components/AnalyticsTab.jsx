@@ -83,6 +83,15 @@ export default function AnalyticsTab() {
     return <div className={styles.error}>Не удалось загрузить аналитику</div>;
   }
 
+  const viewsData = analytics.products
+    .filter((p) => p.viewCount > 0)
+    .sort((a, b) => b.viewCount - a.viewCount)
+    .map((p) => ({
+      name: p.name.length > 25 ? p.name.substring(0, 25) + "..." : p.name,
+      Просмотры: p.viewCount,
+    }));
+  const viewsChartHeight = Math.max(420, viewsData.length * 54);
+
   return (
     <div className={styles.analyticsContainer}>
       {/* Сводные карточки */}
@@ -304,20 +313,10 @@ export default function AnalyticsTab() {
       {activeSection === "views" && (
         <div className={styles.chartBlockFull}>
           <h3><FaEye /> Просмотры всех товаров</h3>
-          {analytics.products.filter((p) => p.viewCount > 0).length > 0 ? (
-            <ResponsiveContainer width="100%" height={400}>
+          {viewsData.length > 0 ? (
+            <ResponsiveContainer width="100%" height={viewsChartHeight}>
               <BarChart
-                data={analytics.products
-                  .filter((p) => p.viewCount > 0)
-                  .sort((a, b) => b.viewCount - a.viewCount)
-                  .map((p) => ({
-                    name:
-                      p.name.length > 25
-                        ? p.name.substring(0, 25) + "..."
-                        : p.name,
-                    Просмотры: p.viewCount,
-                    Покупки: p.purchaseCount,
-                  }))}
+                data={viewsData}
                 layout="vertical"
                 margin={{ left: 150 }}
               >
@@ -330,15 +329,9 @@ export default function AnalyticsTab() {
                   fontSize={12}
                 />
                 <Tooltip />
-                <Legend />
                 <Bar
                   dataKey="Просмотры"
                   fill="#6c63ff"
-                  radius={[0, 4, 4, 0]}
-                />
-                <Bar
-                  dataKey="Покупки"
-                  fill="#484283"
                   radius={[0, 4, 4, 0]}
                 />
               </BarChart>

@@ -138,6 +138,8 @@ export function AuthProvider({ children }) {
             <button
               type="button"
               onClick={() => {
+                setSessionBlockedMessage("");
+                sessionStorage.setItem("forceOpenAuthModal", "1");
                 window.location.href = "/";
               }}
               style={{

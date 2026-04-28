@@ -35,6 +35,11 @@ export default function AuthModal({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (formData.password.length < 6) {
+      setError("Пароль должен содержать минимум 6 символов");
+      return;
+    }
+
     setLoading(true);
     setError("");
 
@@ -85,6 +90,7 @@ export default function AuthModal({
                 value={formData.password}
                 onChange={handleChange}
                 required
+                minLength={6}
               />
             </div>
 
