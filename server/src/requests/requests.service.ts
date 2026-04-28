@@ -15,6 +15,7 @@ export class RequestsService implements OnModuleInit {
     });
   }
 
+
   async sendRequest(createRequestDto: CreateRequestDto) {
     if (!process.env.VK_TOKEN) {
       this.logger.warn("VK Token not configured.");
