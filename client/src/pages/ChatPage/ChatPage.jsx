@@ -8,10 +8,25 @@ import {
   sendMessage,
   markAsRead,
 } from "../../api/messages";
+import { getToken } from "../../api/auth";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
+import realtimeService from "../../services/realtimeService";
+import { RealtimeTopics } from "../../services/realtimeTopics";
 import toast from "react-hot-toast";
 import styles from "./ChatPage.module.css";
+
+const appendUniqueMessage = (messages, message) => {
+  if (!message?.id) {
+    return messages;
+  }
+
+  if (messages.some((item) => item.id === message.id)) {
+    return messages;
+  }
+
+  return [...messages, message];
+};
 
 export default function ChatPage() {
   const { user } = useAuth();
@@ -88,7 +103,7 @@ export default function ChatPage() {
       }
 
       const message = await sendMessage(receiverId, newMessage);
-      setMessages((prev) => [...prev, message]);
+      setMessages((prev) => appendUniqueMessage(prev, message));
       setNewMessage("");
     } catch (error) {
       toast.error("Ошибка при отправке сообщения");
@@ -96,26 +111,104 @@ export default function ChatPage() {
     }
   };
 
-  // Автообновление (polling)
   useEffect(() => {
-    if (!chatPartner && user.role !== "admin") return;
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
-    const interval = setInterval(async () => {
-      try {
-        if (user.role === "admin" && selectedUserId) {
-          const data = await getConversation(selectedUserId);
-          setMessages(data);
-        } else if (user.role !== "admin" && chatPartner) {
-          const data = await getMyChat();
-          setMessages(data.messages);
+  // Realtime подписки
+  useEffect(() => {
+    const token = getToken();
+    if (!token || !user) {
+      return undefined;
+    }
+
+    realtimeService.connect(token);
+
+    const unsubMessage = realtimeService.subscribe(
+      RealtimeTopics.CHAT_MESSAGE_CREATED,
+      async (message) => {
+        if (!message || !message.senderId || !message.receiverId) {
+          return;
         }
-      } catch (error) {
-        console.error("Ошибка автообновления:", error);
-      }
-    }, 3000); // Обновление каждые 3 секунды
 
-    return () => clearInterval(interval);
-  }, [chatPartner, selectedUserId, user.role]);
+        if (user.role === "admin") {
+          setChats((prev) =>
+            prev.map((chat) => {
+              const isRelated =
+                chat.user.id === message.senderId ||
+                chat.user.id === message.receiverId;
+
+              if (!isRelated) {
+                return chat;
+              }
+
+              const shouldIncreaseUnread =
+                message.receiverId === user.id &&
+                chat.user.id === message.senderId &&
+                selectedUserId !== chat.user.id;
+
+              return {
+                ...chat,
+                lastMessage: message,
+                unreadCount: shouldIncreaseUnread
+                  ? chat.unreadCount + 1
+                  : chat.unreadCount,
+              };
+            })
+          );
+
+          const isForOpenedConversation =
+            selectedUserId &&
+            (message.senderId === selectedUserId ||
+              message.receiverId === selectedUserId);
+
+          if (isForOpenedConversation) {
+            setMessages((prev) => appendUniqueMessage(prev, message));
+
+            if (message.senderId === selectedUserId) {
+              await markAsRead(selectedUserId);
+            }
+          }
+          return;
+        }
+
+        const partnerId = chatPartner?.id;
+        if (!partnerId) {
+          return;
+        }
+
+        const isForCurrentConversation =
+          (message.senderId === user.id && message.receiverId === partnerId) ||
+          (message.senderId === partnerId && message.receiverId === user.id);
+
+        if (isForCurrentConversation) {
+          setMessages((prev) => appendUniqueMessage(prev, message));
+          if (message.senderId === partnerId) {
+            await markAsRead(partnerId);
+          }
+        }
+      }
+    );
+
+    const unsubConversationChanged = realtimeService.subscribe(
+      RealtimeTopics.CHAT_CONVERSATION_UPDATED,
+      async () => {
+        if (user.role === "admin") {
+          try {
+            const data = await getAdminChats();
+            setChats(data);
+          } catch (error) {
+            console.error("Ошибка обновления списка чатов:", error);
+          }
+        }
+      }
+    );
+
+    return () => {
+      unsubMessage();
+      unsubConversationChanged();
+    };
+  }, [chatPartner?.id, selectedUserId, user]);
 
   if (loading) {
     return (

@@ -1,9 +1,12 @@
 import { Injectable, Logger } from "@nestjs/common";
 import axios from "axios";
 import { CreateRequestDto } from "./dto/create-request.dto";
+import { RealtimeGateway } from "../realtime/realtime.gateway";
+import { RealtimeTopics } from "../realtime/realtime-topics";
 
 @Injectable()
 export class RequestsService {
+  constructor(private readonly realtimeGateway: RealtimeGateway) {}
 
   private readonly logger = new Logger(RequestsService.name);
   private readonly vkToken = process.env.VK_TOKEN;
@@ -36,6 +39,25 @@ export class RequestsService {
         await this.sendMessage(peerId, message);
         await new Promise(resolve => setTimeout(resolve, 50));
       }
+
+      const eventPayload = {
+        serviceName: createRequestDto.serviceName,
+        name: createRequestDto.name,
+        phone: createRequestDto.phone,
+        email: createRequestDto.email ?? null,
+        comment: createRequestDto.comment ?? null,
+        sentToPeers: peers.length,
+        createdAt: new Date().toISOString(),
+      };
+
+      this.realtimeGateway.emitToAdmins(
+        RealtimeTopics.REQUEST_CREATED,
+        eventPayload
+      );
+      this.realtimeGateway.emitToAdmins(RealtimeTopics.ANALYTICS_UPDATED, {
+        source: "requests",
+        createdAt: eventPayload.createdAt,
+      });
 
       return {
         success: true,

@@ -1,14 +1,19 @@
 import { Injectable } from "@nestjs/common";
 import { PrismaService } from "../prisma/prisma.service";
 import { CreateMessageDto } from "./dto/create-message.dto";
+import { RealtimeGateway } from "../realtime/realtime.gateway";
+import { RealtimeTopics } from "../realtime/realtime-topics";
 
 @Injectable()
 export class MessagesService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private readonly realtimeGateway: RealtimeGateway
+  ) {}
 
   // Создать новое сообщение
   async create(senderId: number, createMessageDto: CreateMessageDto) {
-    return this.prisma.message.create({
+    const message = await this.prisma.message.create({
       data: {
         content: createMessageDto.content,
         senderId,
@@ -35,6 +40,21 @@ export class MessagesService {
         },
       },
     });
+
+    this.realtimeGateway.emitToMany(
+      [senderId, createMessageDto.receiverId],
+      RealtimeTopics.CHAT_MESSAGE_CREATED,
+      message
+    );
+
+    this.realtimeGateway.emitToAdmins(RealtimeTopics.CHAT_CONVERSATION_UPDATED, {
+      senderId,
+      receiverId: createMessageDto.receiverId,
+      messageId: message.id,
+      createdAt: message.createdAt,
+    });
+
+    return message;
   }
 
   // Получить все сообщения между двумя пользователями

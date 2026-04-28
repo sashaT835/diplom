@@ -2,10 +2,15 @@ import { Injectable, NotFoundException, ForbiddenException } from "@nestjs/commo
 import { PrismaService } from "../prisma/prisma.service";
 import { UpdateUserDto } from "./dto/update-user.dto";
 import * as bcrypt from "bcrypt";
+import { RealtimeGateway } from "../realtime/realtime.gateway";
+import { RealtimeTopics } from "../realtime/realtime-topics";
 
 @Injectable()
 export class UsersService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private readonly realtimeGateway: RealtimeGateway
+  ) {}
 
   async getAllUsers() {
     const users = await this.prisma.user.findMany({
@@ -40,6 +45,15 @@ export class UsersService {
       where: { id: targetUserId },
       data: { role },
     });
+
+    this.realtimeGateway.emitToUser(targetUserId, RealtimeTopics.USER_ROLE_CHANGED, {
+      userId: targetUserId,
+      newRole: updated.role,
+      changedAt: new Date().toISOString(),
+      reason: "Ваша роль была изменена администратором. Выполните повторный вход.",
+      forceLogout: true,
+    });
+
     const { password, ...result } = updated;
     return result;
   }

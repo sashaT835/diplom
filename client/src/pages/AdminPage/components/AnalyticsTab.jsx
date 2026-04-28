@@ -16,6 +16,9 @@ import {
 } from "recharts";
 import { FaBox, FaEye, FaShoppingCart, FaChartLine, FaTrophy, FaChartBar, FaClipboardList, FaSyncAlt } from "react-icons/fa";
 import { getAnalytics } from "../../../api/analytics";
+import { getToken } from "../../../api/auth";
+import realtimeService from "../../../services/realtimeService";
+import { RealtimeTopics } from "../../../services/realtimeTopics";
 import toast from "react-hot-toast";
 import styles from "./AnalyticsTab.module.css";
 
@@ -37,6 +40,26 @@ export default function AnalyticsTab() {
 
   useEffect(() => {
     loadAnalytics();
+  }, []);
+
+  useEffect(() => {
+    const token = getToken();
+    if (!token) {
+      return undefined;
+    }
+
+    realtimeService.connect(token);
+
+    const unsubscribe = realtimeService.subscribe(
+      RealtimeTopics.ANALYTICS_UPDATED,
+      () => {
+        loadAnalytics();
+      }
+    );
+
+    return () => {
+      unsubscribe();
+    };
   }, []);
 
   const loadAnalytics = async () => {
