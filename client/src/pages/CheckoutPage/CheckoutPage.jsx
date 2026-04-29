@@ -10,6 +10,7 @@ import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import OrderSuccessModal from "../../components/OrderSuccessModal/OrderSuccessModal";
 import styles from "./CheckoutPage.module.css";
+import { API_BASE_URL, resolveAssetUrl } from "../../config/api";
 
 export default function CheckoutPage() {
   const navigate = useNavigate();
@@ -144,7 +145,6 @@ export default function CheckoutPage() {
         .map((item) => `${item.product.name} x${item.quantity} — ${(item.product.price * item.quantity).toLocaleString("ru-RU")} ₽`)
         .join("\n");
 
-      const API_BASE_URL = import.meta.env.VITE_API_URL;
       await fetch(`${API_BASE_URL}/requests`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -221,7 +221,7 @@ export default function CheckoutPage() {
               {cartData.items.map((item) => (
                 <div key={item.id} className={styles.orderItem}>
                   <img
-                    src={`http://186.246.3.13:3001${item.product.image}`}
+                    src={resolveAssetUrl(item.product.image)}
                     alt={item.product.name}
                     className={styles.productImage}
                   />

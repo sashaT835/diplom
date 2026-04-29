@@ -10,6 +10,7 @@ import AnalyticsTab from "./components/AnalyticsTab";
 import UsersTab from "./components/UsersTab";
 import toast from "react-hot-toast";
 import styles from "./AdminPage.module.css";
+import { API_BASE_URL } from "../../config/api";
 
 export default function AdminPage() {
   const navigate = useNavigate();
@@ -38,7 +39,7 @@ export default function AdminPage() {
       const token = getCookie("token");
       const endpoint = type === "product" ? "/products" : "/services";
 
-      const response = await fetch(`http://186.246.3.13:3001${endpoint}/${id}`, {
+      const response = await fetch(`${API_BASE_URL}${endpoint}/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -131,7 +132,7 @@ export default function AdminPage() {
     try {
       setIsUploading(true);
       const token = getCookie("token");
-      const response = await fetch('http://186.246.3.13:3001/upload/image', {
+      const response = await fetch(`${API_BASE_URL}/upload/image`, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${token}`,
@@ -196,8 +197,8 @@ export default function AdminPage() {
         editingItem.type === "product" ? "/products" : "/services";
       const method = isCreating ? "POST" : "PATCH";
       const url = isCreating
-        ? `http://186.246.3.13:3001${endpoint}`
-        : `http://186.246.3.13:3001${endpoint}/${editingItem.id}`;
+        ? `${API_BASE_URL}${endpoint}`
+        : `${API_BASE_URL}${endpoint}/${editingItem.id}`;
 
       // Prepare data without id and type fields
       const { id, type, ...itemData } = editingItem;

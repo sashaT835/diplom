@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import styles from "./RequestModal.module.css";
+import { API_BASE_URL } from "../../config/api";
 
 export default function RequestModal({ isOpen, onClose, serviceName }) {
   const [formData, setFormData] = useState({
@@ -52,7 +53,7 @@ export default function RequestModal({ isOpen, onClose, serviceName }) {
     setSubmitStatus(null);
 
     try {
-      const response = await fetch("http://186.246.3.13:3001/requests", {
+      const response = await fetch(`${API_BASE_URL}/requests`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

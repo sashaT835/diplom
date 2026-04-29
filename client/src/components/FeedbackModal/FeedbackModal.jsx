@@ -1,8 +1,7 @@
 import { useState } from "react";
 import Button from "../Button/Button";
 import styles from "./FeedbackModal.module.css";
-
-const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3001";
+import { API_BASE_URL } from "../../config/api";
 
 export default function FeedbackModal({ isOpen, onClose }) {
   const [form, setForm] = useState({

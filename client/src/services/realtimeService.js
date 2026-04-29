@@ -1,6 +1,11 @@
 import { io } from "socket.io-client";
+import { API_BASE_URL } from "../config/api";
 
-const WS_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3001";
+const WS_BASE_URL = import.meta.env.VITE_WS_URL || (
+  API_BASE_URL.startsWith("http://") || API_BASE_URL.startsWith("https://")
+    ? API_BASE_URL.replace(/\/api$/, "")
+    : undefined
+);
 
 class RealtimeService {
   constructor() {
