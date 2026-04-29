@@ -8,17 +8,17 @@ import { join } from "path";
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
-  // Serve static files from uploads directory
   app.useStaticAssets(join(process.cwd(), "uploads"), {
     prefix: "/uploads/",
   });
 
-  // Enable CORS for frontend
   app.enableCors({
     origin: [
-      "http://localhost:5173", // Development
-      "http://localhost", // Production Docker
-      "http://localhost:80", // Explicit port 80
+        "http://localhost:5173",
+        "http://localhost",
+        "http://localhost:80",
+        "http://186.246.3.13",
+        "http://186.246.3.13:80",
     ],
     credentials: true,
   });
@@ -31,7 +31,6 @@ async function bootstrap() {
     })
   );
 
-  // Setup Swagger
   const config = new DocumentBuilder()
     .setTitle("Titan Products API")
     .setDescription("API для управления каталогом товаров Titan")

@@ -1,5 +1,4 @@
 services:
-  # База данных PostgreSQL
   db:
     image: postgres:15-alpine
     container_name: diplom1c_db
@@ -18,7 +17,6 @@ services:
       timeout: 5s
       retries: 5
 
-  # Backend (NestJS)
   server:
     build:
       context: ./server
@@ -28,17 +26,18 @@ services:
     ports:
       - "3001:3001"
     environment:
-      DATABASE_URL: postgresql://postgres:postgres@db:5433/Titan?schema=public
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/Titan?schema=public
       PORT: 3001
-      TELEGRAM_BOT_TOKEN: 8704894584:AAFQxTWE8Z_kowJav-CGlNdsArclI1Mar0o
-      TELEGRAM_CHAT_ID: -5138935561
+      JWT_SECRET: your_super_secret_key_SASHAT
+      BASE_URL: http://186.246.3.13:3001
+      VK_TOKEN: vk1.a.pqQ5McNGk2eUF4csQJpJq9zlbtl1piRvkaINqtMbygpTxwo_-qCzX3O0JRQhkRYJZawccbBoih93qNSCgiFiHbRbttPmXwqBvogDgNR8wSqYce6XTevxpuAFbPY6Li3gETeMMknMFfvFxLSm_9Uygpa6MV7-dCoMRRjVKJm0Z-baAhACItnxLobAPMdMx74oBxZQubqQ__9qFogx3JUG1Q
+      VK_API_VERSION: 5.131
     depends_on:
       db:
         condition: service_healthy
     volumes:
       - ./server/uploads:/app/uploads
 
-  # Frontend (React + Nginx)
   client:
     build:
       context: ./client
@@ -47,6 +46,8 @@ services:
     restart: unless-stopped
     ports:
       - "80:80"
+    environment:
+      VITE_API_URL: http://186.246.3.13:3001
     depends_on:
       - server
 
