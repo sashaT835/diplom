@@ -37,9 +37,18 @@ export default function AnalyticsTab() {
   const [analytics, setAnalytics] = useState(null);
   const [loading, setLoading] = useState(true);
   const [activeSection, setActiveSection] = useState("overview");
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     loadAnalytics();
+  }, []);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 768px)");
+    const apply = () => setIsMobile(mediaQuery.matches);
+    apply();
+    mediaQuery.addEventListener("change", apply);
+    return () => mediaQuery.removeEventListener("change", apply);
   }, []);
 
   useEffect(() => {
@@ -318,15 +327,15 @@ export default function AnalyticsTab() {
               <BarChart
                 data={viewsData}
                 layout="vertical"
-                margin={{ left: 150 }}
+                margin={{ left: isMobile ? 16 : 150, right: isMobile ? 8 : 20 }}
               >
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis type="number" />
                 <YAxis
                   dataKey="name"
                   type="category"
-                  width={140}
-                  fontSize={12}
+                  width={isMobile ? 82 : 140}
+                  fontSize={isMobile ? 10 : 12}
                 />
                 <Tooltip />
                 <Bar

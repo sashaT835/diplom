@@ -27,8 +27,14 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401) {
-      // Если токен невалидный, удаляем его
+    const status = error.response?.status;
+    const requestUrl = error.config?.url || "";
+    const isAuthRequest =
+      requestUrl.includes("/auth/login") || requestUrl.includes("/auth/register");
+
+    if (status === 401 && !isAuthRequest) {
+      // Для защищенных запросов при 401 завершаем сессию.
+      // Для login/register редирект НЕ делаем: ошибка должна остаться в модалке.
       const { deleteCookie } = require("../utils/cookies");
       deleteCookie("token");
       deleteCookie("user");

@@ -156,6 +156,8 @@
   .footerContent {
     flex-direction: column;
     gap: 35px;
+    align-items: center;
+    text-align: center;
   }
 
   .logoBlock img {
@@ -169,6 +171,7 @@
 
   .helpSection {
     max-width: 100%;
+    align-items: center;
   }
 
   .divider {
@@ -184,11 +187,22 @@
   }
 
   .navSection {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
     gap: 16px;
+    max-width: 100%;
   }
 
   .navSection a {
     font-size: 15px;
+    white-space: nowrap;
+  }
+
+  .navSection a:last-child {
+    width: 100%;
+    text-align: center;
   }
 
   .copyright {
@@ -235,6 +249,12 @@
 
   .navSection a {
     font-size: 14px;
+  }
+
+  .logoSection,
+  .contactInfo,
+  .logoBlock {
+    align-items: center;
   }
 
   .copyright {
