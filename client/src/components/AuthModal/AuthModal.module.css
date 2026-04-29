@@ -164,7 +164,7 @@
 
 @media (max-width: 768px) {
   .modalContent {
-    flex-direction: column;
+    max-width: 560px;
     max-height: 90vh;
     overflow-y: auto;
   }
@@ -174,7 +174,7 @@
   }
 
   .rightSection {
-    min-height: 300px;
+    display: none;
   }
 
   .leftSection h2 {
