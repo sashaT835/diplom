@@ -52,7 +52,7 @@ export default function RequestModal({ isOpen, onClose, serviceName }) {
     setSubmitStatus(null);
 
     try {
-      const response = await fetch("http://localhost:3001/requests", {
+      const response = await fetch("http://186.246.3.13:3001/requests", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

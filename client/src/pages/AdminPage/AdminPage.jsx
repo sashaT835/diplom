@@ -38,7 +38,7 @@ export default function AdminPage() {
       const token = getCookie("token");
       const endpoint = type === "product" ? "/products" : "/services";
 
-      const response = await fetch(`http://localhost:3001${endpoint}/${id}`, {
+      const response = await fetch(`http://186.246.3.13:3001${endpoint}/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -64,11 +64,11 @@ export default function AdminPage() {
   };
 
   const handleCreate = (type) => {
-    setEditingItem({ 
-      type, 
-      name: "", 
-      price: 0, 
-      description: "", 
+    setEditingItem({
+      type,
+      name: "",
+      price: 0,
+      description: "",
       category: "",
       image: type === "product" ? "" : undefined
     });
@@ -115,7 +115,7 @@ export default function AdminPage() {
   const handleDrop = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    
+
     const files = e.dataTransfer.files;
     if (files.length > 0) {
       processFile(files[0]);
@@ -131,7 +131,7 @@ export default function AdminPage() {
     try {
       setIsUploading(true);
       const token = getCookie("token");
-      const response = await fetch('http://localhost:3001/upload/image', {
+      const response = await fetch('http://186.246.3.13:3001/upload/image', {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${token}`,
@@ -160,7 +160,7 @@ export default function AdminPage() {
         toast.error("Название не может быть пустым");
         return;
       }
-      
+
       if (!editingItem.price || editingItem.price <= 0) {
         toast.error("Цена должна быть больше 0");
         return;
@@ -172,7 +172,7 @@ export default function AdminPage() {
           toast.error("Изображение обязательно для товаров");
           return;
         }
-        
+
         if (!editingItem.category?.trim()) {
           toast.error("Категория обязательна для товаров");
           return;
@@ -180,7 +180,7 @@ export default function AdminPage() {
       }
 
       let imageUrl = editingItem.image;
-      
+
       // Если выбран новый файл, загружаем его
       if (selectedFile) {
         const uploadedUrl = await uploadFile();
@@ -196,12 +196,12 @@ export default function AdminPage() {
         editingItem.type === "product" ? "/products" : "/services";
       const method = isCreating ? "POST" : "PATCH";
       const url = isCreating
-        ? `http://localhost:3001${endpoint}`
-        : `http://localhost:3001${endpoint}/${editingItem.id}`;
+        ? `http://186.246.3.13:3001${endpoint}`
+        : `http://186.246.3.13:3001${endpoint}/${editingItem.id}`;
 
       // Prepare data without id and type fields
       const { id, type, ...itemData } = editingItem;
-      
+
       // Convert price to number and update image URL
       const dataToSend = {
         ...itemData,

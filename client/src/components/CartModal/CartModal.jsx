@@ -140,7 +140,7 @@ function CartModal({ isOpen, onClose, onCartUpdate }) {
               {cartData.items.map((item) => (
                 <div key={item.id} className={styles.cartItem}>
                   <img
-                    src={`http://localhost:3001${item.product.image}`}
+                    src={`http://186.246.3.13:3001${item.product.image}`}
                     alt={item.product.name}
                     className={styles.productImage}
                   />
