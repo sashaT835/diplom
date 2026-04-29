@@ -46,8 +46,6 @@ services:
     restart: unless-stopped
     ports:
       - "80:80"
-    environment:
-      VITE_API_URL: http://186.246.3.13:3001
     depends_on:
       - server
 
