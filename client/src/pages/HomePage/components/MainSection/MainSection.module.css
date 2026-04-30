@@ -1,7 +1,9 @@
 .mainSection {
   height: 100vh;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  padding-top: calc(100vh / 3);
+  box-sizing: border-box;
 }
 
 .mainSection :global(.container) {
@@ -58,9 +60,6 @@
 
 /* Планшеты */
 @media (max-width: 1024px) {
-  .mainSection {
-    padding-top: 0;
-  }
   .title {
     max-width: 85%;
     font-size: 42px;
@@ -77,7 +76,6 @@
 /* Мобильные устройства */
 @media (max-width: 768px) {
   .mainSection {
-    padding-top: 0;
     height: auto;
     min-height: 100vh;
   }
@@ -102,9 +100,6 @@
 
 /* Маленькие телефоны */
 @media (max-width: 480px) {
-  .mainSection {
-    padding-top: 60px;
-  }
   .title {
     font-size: 28px;
   }
