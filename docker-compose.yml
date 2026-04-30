@@ -5,9 +5,9 @@ services:
     restart: unless-stopped
     cpus: "1.0"
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: Titan
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: ${POSTGRES_DB:-Titan}
     mem_limit: 1400m
     mem_reservation: 384m
     memswap_limit: 2g
@@ -35,12 +35,13 @@ services:
     ports:
       - "3001:3001"
     environment:
-      DATABASE_URL: postgresql://postgres:postgres@db:5432/Titan?schema=public
-      PORT: 3001
-      JWT_SECRET: your_super_secret_key_SASHAT
-      BASE_URL: http://186.246.3.13:3001
-      VK_TOKEN: vk1.a.pqQ5McNGk2eUF4csQJpJq9zlbtl1piRvkaINqtMbygpTxwo_-qCzX3O0JRQhkRYJZawccbBoih93qNSCgiFiHbRbttPmXwqBvogDgNR8wSqYce6XTevxpuAFbPY6Li3gETeMMknMFfvFxLSm_9Uygpa6MV7-dCoMRRjVKJm0Z-baAhACItnxLobAPMdMx74oBxZQubqQ__9qFogx3JUG1Q
-      VK_API_VERSION: 5.131
+      DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@db:5432/${POSTGRES_DB:-Titan}?schema=public
+      PORT: ${PORT:-3001}
+      JWT_SECRET: ${JWT_SECRET}
+      BASE_URL: ${BASE_URL:-http://186.246.3.13:3001}
+      VK_TOKEN: ${VK_TOKEN:-}
+      VK_API_VERSION: ${VK_API_VERSION:-5.131}
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:5173,http://localhost,http://localhost:80,http://186.246.3.13,http://186.246.3.13:80}
     cpus: "0.8"
     mem_limit: 1200m
     mem_reservation: 256m
@@ -54,6 +55,10 @@ services:
     build:
       context: ./client
       dockerfile: Dockerfile
+      args:
+        VITE_API_URL: ${VITE_API_URL:-/api}
+        VITE_BACKEND_URL: ${VITE_BACKEND_URL:-}
+        VITE_WS_URL: ${VITE_WS_URL:-}
     container_name: diplom1c_client
     restart: unless-stopped
     ports:

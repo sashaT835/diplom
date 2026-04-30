@@ -12,14 +12,13 @@ async function bootstrap() {
     prefix: "/uploads/",
   });
 
+  const corsOrigins = (process.env.CORS_ORIGINS || "")
+    .split(",")
+    .map((origin) => origin.trim())
+    .filter(Boolean);
+
   app.enableCors({
-    origin: [
-        "http://localhost:5173",
-        "http://localhost",
-        "http://localhost:80",
-        "http://186.246.3.13",
-        "http://186.246.3.13:80",
-    ],
+    origin: corsOrigins.length > 0 ? corsOrigins : true,
     credentials: true,
   });
 

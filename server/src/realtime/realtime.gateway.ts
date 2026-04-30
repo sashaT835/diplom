@@ -12,16 +12,14 @@ import {RealtimeTopic} from "./realtime-topics";
 
 @Injectable()
 @WebSocketGateway({
-    cors: {
-        origin: [
-            "http://localhost:5173",
-            "http://localhost",
-            "http://localhost:80",
-            "http://186.246.3.13",
-            "http://186.246.3.13:80",
-        ],
-        credentials: true,
-    },
+  cors: {
+    origin: process.env.CORS_ORIGINS
+      ? process.env.CORS_ORIGINS.split(",")
+          .map((origin) => origin.trim())
+          .filter(Boolean)
+      : true,
+    credentials: true,
+  },
 })
 export class RealtimeGateway
     implements OnGatewayConnection, OnGatewayDisconnect {
