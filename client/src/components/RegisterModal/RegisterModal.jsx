@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import styles from "./RegisterModal.module.css";
 
@@ -60,7 +61,7 @@ export default function RegisterModal({
       onClose();
     } catch (err) {
       setError(
-        err.response?.data?.message || "Ошибка регистрации. Попробуйте снова."
+        err.response?.data?.message || "Ошибка регистрации. Попробуйте снова.",
       );
     } finally {
       setLoading(false);
@@ -127,8 +128,8 @@ export default function RegisterModal({
                 required
               />
               <label htmlFor="privacy">
-                Я даю согласие на обработку моих персональных данных и
-                согласился с Политикой конфиденциальности
+                Я даю согласие на обработку моих персональных данных и соглашаюсь с{" "}
+                <Link to="/privacy">Политикой конфиденциальности</Link>
               </label>
             </div>
 

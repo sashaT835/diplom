@@ -90,6 +90,7 @@
 .formSection {
   display: flex;
   flex-direction: column;
+  align-items: stretch;
 }
 
 .description {
@@ -98,6 +99,7 @@
   line-height: 160%;
   color: #666;
   margin: 0 0 30px 0;
+  text-align: left;
 }
 
 .formTitle {
@@ -162,6 +164,18 @@
   color: #666;
   line-height: 140%;
   cursor: pointer;
+}
+
+.checkboxLabel a {
+  color: var(--color-accent);
+  text-decoration: underline;
+}
+
+.statusMessage {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: #484283;
 }
 
 /* Планшеты */

@@ -1,6 +1,7 @@
 import axios from "axios";
 import { getToken } from "./auth";
-import { API_BASE_URL } from "../config/api";
+
+const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3001";
 
 const axiosInstance = axios.create({
   baseURL: API_BASE_URL,
@@ -33,8 +34,6 @@ axiosInstance.interceptors.response.use(
       requestUrl.includes("/auth/login") || requestUrl.includes("/auth/register");
 
     if (status === 401 && !isAuthRequest) {
-      // Для защищенных запросов при 401 завершаем сессию.
-      // Для login/register редирект НЕ делаем: ошибка должна остаться в модалке.
       const { deleteCookie } = require("../utils/cookies");
       deleteCookie("token");
       deleteCookie("user");

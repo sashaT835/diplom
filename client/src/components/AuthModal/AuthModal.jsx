@@ -49,7 +49,7 @@ export default function AuthModal({
       onClose();
     } catch (err) {
       setError(
-        err.response?.data?.message || "Ошибка входа. Проверьте данные."
+        err.response?.data?.message || "Ошибка входа. Проверьте данные.",
       );
     } finally {
       setLoading(false);
@@ -90,7 +90,6 @@ export default function AuthModal({
                 value={formData.password}
                 onChange={handleChange}
                 required
-                minLength={6}
               />
             </div>
 

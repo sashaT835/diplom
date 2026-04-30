@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
 import styles from "./RequestModal.module.css";
-import { API_BASE_URL } from "../../config/api";
 
 export default function RequestModal({ isOpen, onClose, serviceName }) {
   const [formData, setFormData] = useState({
@@ -8,6 +9,7 @@ export default function RequestModal({ isOpen, onClose, serviceName }) {
     phone: "",
     email: "",
     comment: "",
+    agree: false,
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null);
@@ -15,7 +17,13 @@ export default function RequestModal({ isOpen, onClose, serviceName }) {
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
-      setFormData({ name: "", phone: "", email: "", comment: "" });
+      setFormData({
+        name: "",
+        phone: "",
+        email: "",
+        comment: "",
+        agree: false,
+      });
       setSubmitStatus(null);
     } else {
       document.body.style.overflow = "unset";
@@ -27,10 +35,10 @@ export default function RequestModal({ isOpen, onClose, serviceName }) {
   }, [isOpen]);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, type, checked } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: type === "checkbox" ? checked : value,
     }));
   };
 
@@ -49,17 +57,24 @@ export default function RequestModal({ isOpen, onClose, serviceName }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!formData.agree) {
+      toast.error("Необходимо согласие на обработку персональных данных");
+      return;
+    }
+
     setIsSubmitting(true);
     setSubmitStatus(null);
 
     try {
+      const { agree, ...requestPayload } = formData;
       const response = await fetch(`${API_BASE_URL}/requests`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          ...formData,
+          ...requestPayload,
           serviceName,
         }),
       });
@@ -75,7 +90,7 @@ export default function RequestModal({ isOpen, onClose, serviceName }) {
       } else {
         setSubmitStatus({ type: "error", message: "Ошибка отправки заявки" });
       }
-    } catch (error) {
+    } catch {
       setSubmitStatus({
         type: "error",
         message: "Не удалось отправить заявку. Попробуйте позже.",
@@ -89,12 +104,12 @@ export default function RequestModal({ isOpen, onClose, serviceName }) {
 
   function formatPhone(digits) {
     if (!digits.length) return "";
-    const d = digits[0] === "8" ? "7" + digits.slice(1) : digits;
+    const d = digits[0] === "8" ? `7${digits.slice(1)}` : digits;
     let m = "+7";
-    if (d.length > 1) m += " (" + d.slice(1, 4);
-    if (d.length >= 4) m += ") " + d.slice(4, 7);
-    if (d.length >= 7) m += "-" + d.slice(7, 9);
-    if (d.length >= 9) m += "-" + d.slice(9, 11);
+    if (d.length > 1) m += ` (${d.slice(1, 4)}`;
+    if (d.length >= 4) m += `) ${d.slice(4, 7)}`;
+    if (d.length >= 7) m += `-${d.slice(7, 9)}`;
+    if (d.length >= 9) m += `-${d.slice(9, 11)}`;
     return m;
   }
 
@@ -102,7 +117,7 @@ export default function RequestModal({ isOpen, onClose, serviceName }) {
     <div className={styles.overlay} onClick={onClose}>
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
         <button className={styles.closeButton} onClick={onClose}>
-          ✕
+          ×
         </button>
 
         <h2 className={styles.title}>Заявка на услугу</h2>
@@ -170,6 +185,20 @@ export default function RequestModal({ isOpen, onClose, serviceName }) {
               placeholder="Дополнительная информация..."
               rows="4"
             />
+          </div>
+
+          <div className={styles.checkboxGroup}>
+            <input
+              type="checkbox"
+              id="request-agreement"
+              name="agree"
+              checked={formData.agree}
+              onChange={handleChange}
+            />
+            <label htmlFor="request-agreement">
+              Я даю согласие на обработку моих персональных данных и соглашаюсь с{" "}
+              <Link to="/privacy">Политикой конфиденциальности</Link>
+            </label>
           </div>
 
           {submitStatus && (

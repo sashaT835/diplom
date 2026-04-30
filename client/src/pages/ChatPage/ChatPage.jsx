@@ -179,143 +179,143 @@ export default function ChatPage() {
 
     if (loading) {
         return (<div className={styles.container}>
-                <Header/>
-                <main className={styles.main}>
-                    <div className={styles.loading}>Загрузка...</div>
-                </main>
-                <Footer/>
-            </div>);
-    }
-
-    return (<div className={styles.page}>
-            <div className={styles.headerBg}>
-                <Header/>
-            </div>
-            <div className={styles.container}>
-                <div className={styles.breadcrumbs}>
-                    <a href="/profile">Профиль</a>
-                    <span>/</span>
-                    <span className={styles.active}>Чат с поддержкой</span>
-                </div>
-            </div>
+            <Header/>
             <main className={styles.main}>
-                <div className={styles.chatContainer}>
-                    <div className={styles.chatHeaderBar}>
-                        <h1>Чат с поддержкой</h1>
-                        <button
-                            className={styles.backButton}
-                            onClick={() => navigate("/profile")}
-                        >
-                            ← Вернуться в профиль
-                        </button>
-                    </div>
-
-                    {user.role === "admin" ? (// Интерфейс для админа
-                        <div className={styles.adminLayout}>
-                            <div className={styles.chatsList}>
-                                <h2>Чаты пользователей</h2>
-                                {chats.length === 0 ? (
-                                    <p className={styles.emptyMessage}>Нет активных чатов</p>) : (chats.map((chat) => (
-                                        <div
-                                            key={chat.user.id}
-                                            className={`${styles.chatItem} ${selectedUserId === chat.user.id ? styles.active : ""}`}
-                                            onClick={() => loadConversation(chat.user.id)}
-                                        >
-                                            <div className={styles.chatItemInfo}>
-                                                <strong>
-                                                    {chat.user.firstName.substring(0, 50) || chat.user.email.substring(0, 50)}
-                                                </strong>
-                                                <p className={styles.lastMessage}>
-                                                    {chat.lastMessage.content.substring(0, 50)}...
-                                                </p>
-                                            </div>
-                                            {chat.unreadCount > 0 && (<span className={styles.unreadBadge}>
-                          {chat.unreadCount}
-                        </span>)}
-                                        </div>)))}
-                            </div>
-
-                            <div className={styles.messagesArea}>
-                                {selectedUserId ? (<>
-                                        <div className={styles.chatHeader}>
-                                            <h3>{chatPartner?.firstName || chatPartner?.email}</h3>
-                                        </div>
-                                        <div className={styles.messagesContainer}>
-                                            {messages.map((msg) => (<div
-                                                    key={msg.id}
-                                                    className={`${styles.message} ${msg.senderId === user.id ? styles.myMessage : styles.theirMessage}`}
-                                                >
-                                                    <div className={styles.messageContent}>
-                                                        {msg.content}
-                                                    </div>
-                                                    <div className={styles.messageTime}>
-                                                        {new Date(msg.createdAt).toLocaleString("ru-RU", {
-                                                            day: "2-digit",
-                                                            month: "2-digit",
-                                                            hour: "2-digit",
-                                                            minute: "2-digit",
-                                                        })}
-                                                    </div>
-                                                </div>))}
-                                            <div ref={messagesEndRef}/>
-                                        </div>
-                                        <form className={styles.inputForm} onSubmit={handleSend}>
-                                            <input
-                                                type="text"
-                                                value={newMessage}
-                                                onChange={(e) => setNewMessage(e.target.value)}
-                                                placeholder="Введите сообщение..."
-                                                className={styles.messageInput}
-                                            />
-                                            <button type="submit" className={styles.sendButton} aria-label="Отправить">
-                                                <span className={styles.sendButtonText}>Отправить</span>
-                                                <span className={styles.sendButtonIcon} aria-hidden="true">➤</span>
-                                            </button>
-                                        </form>
-                                    </>) : (<div className={styles.selectChatPrompt}>
-                                        Выберите чат для начала общения
-                                    </div>)}
-                            </div>
-                        </div>) : (// Интерфейс для пользователя
-                        <div className={styles.userChat}>
-                            {chatPartner && (<div className={styles.chatHeader}>
-                                    <h3>Администратор</h3>
-                                </div>)}
-                            <div className={styles.messagesContainer}>
-                                {messages.length === 0 ? (<p className={styles.emptyMessage}>
-                                        Нет сообщений. Начните диалог!
-                                    </p>) : (messages.map((msg) => (<div
-                                            key={msg.id}
-                                            className={`${styles.message} ${msg.senderId === user.id ? styles.myMessage : styles.theirMessage}`}
-                                        >
-                                            <div className={styles.messageContent}>{msg.content}</div>
-                                            <div className={styles.messageTime}>
-                                                {new Date(msg.createdAt).toLocaleString("ru-RU", {
-                                                    day: "2-digit",
-                                                    month: "2-digit",
-                                                    hour: "2-digit",
-                                                    minute: "2-digit",
-                                                })}
-                                            </div>
-                                        </div>)))}
-                                <div ref={messagesEndRef}/>
-                            </div>
-                            <form className={styles.inputForm} onSubmit={handleSend}>
-                                <input
-                                    type="text"
-                                    value={newMessage}
-                                    onChange={(e) => setNewMessage(e.target.value)}
-                                    placeholder="Введите сообщение..."
-                                    className={styles.messageInput}
-                                />
-                                <button type="submit" className={styles.sendButton} aria-label="Отправить">
-                                    <span className={styles.sendButtonText}>Отправить</span>
-                                    <span className={styles.sendButtonIcon} aria-hidden="true">➤</span>
-                                </button>
-                            </form>
-                        </div>)}
-                </div>
+                <div className={styles.loading}>Загрузка...</div>
             </main>
             <Footer/>
         </div>);
+    }
+
+    return (<div className={styles.page}>
+        <div className={styles.headerBg}>
+            <Header/>
+        </div>
+        <div className={styles.container}>
+            <div className={styles.breadcrumbs}>
+                <a href="/profile">Профиль</a>
+                <span>/</span>
+                <span className={styles.active}>Чат с поддержкой</span>
+            </div>
+        </div>
+        <main className={styles.main}>
+            <div className={styles.chatContainer}>
+                <div className={styles.chatHeaderBar}>
+                    <h1>Чат с поддержкой</h1>
+                    <button
+                        className={styles.backButton}
+                        onClick={() => navigate("/profile")}
+                    >
+                        ← Вернуться в профиль
+                    </button>
+                </div>
+
+                {user.role === "admin" ? (// Интерфейс для админа
+                    <div className={styles.adminLayout}>
+                        <div className={styles.chatsList}>
+                            <h2>Чаты пользователей</h2>
+                            {chats.length === 0 ? (
+                                <p className={styles.emptyMessage}>Нет активных чатов</p>) : (chats.map((chat) => (
+                                <div
+                                    key={chat.user.id}
+                                    className={`${styles.chatItem} ${selectedUserId === chat.user.id ? styles.active : ""}`}
+                                    onClick={() => loadConversation(chat.user.id)}
+                                >
+                                    <div className={styles.chatItemInfo}>
+                                        <strong>
+                                            {chat.user.firstName.substring(0, 50) || chat.user.email.substring(0, 50)}
+                                        </strong>
+                                        <p className={styles.lastMessage}>
+                                            {chat.lastMessage.content.substring(0, 50)}...
+                                        </p>
+                                    </div>
+                                    {chat.unreadCount > 0 && (<span className={styles.unreadBadge}>
+                          {chat.unreadCount}
+                        </span>)}
+                                </div>)))}
+                        </div>
+
+                        <div className={styles.messagesArea}>
+                            {selectedUserId ? (<>
+                                <div className={styles.chatHeader}>
+                                    <h3>{chatPartner?.firstName || chatPartner?.email}</h3>
+                                </div>
+                                <div className={styles.messagesContainer}>
+                                    {messages.map((msg) => (<div
+                                        key={msg.id}
+                                        className={`${styles.message} ${msg.senderId === user.id ? styles.myMessage : styles.theirMessage}`}
+                                    >
+                                        <div className={styles.messageContent}>
+                                            {msg.content}
+                                        </div>
+                                        <div className={styles.messageTime}>
+                                            {new Date(msg.createdAt).toLocaleString("ru-RU", {
+                                                day: "2-digit",
+                                                month: "2-digit",
+                                                hour: "2-digit",
+                                                minute: "2-digit",
+                                            })}
+                                        </div>
+                                    </div>))}
+                                    <div ref={messagesEndRef}/>
+                                </div>
+                                <form className={styles.inputForm} onSubmit={handleSend}>
+                                    <input
+                                        type="text"
+                                        value={newMessage}
+                                        onChange={(e) => setNewMessage(e.target.value)}
+                                        placeholder="Введите сообщение..."
+                                        className={styles.messageInput}
+                                    />
+                                    <button type="submit" className={styles.sendButton} aria-label="Отправить">
+                                        <span className={styles.sendButtonText}>Отправить</span>
+                                        <span className={styles.sendButtonIcon} aria-hidden="true">➤</span>
+                                    </button>
+                                </form>
+                            </>) : (<div className={styles.selectChatPrompt}>
+                                Выберите чат для начала общения
+                            </div>)}
+                        </div>
+                    </div>) : (// Интерфейс для пользователя
+                    <div className={styles.userChat}>
+                        {chatPartner && (<div className={styles.chatHeader}>
+                            <h3>Администратор</h3>
+                        </div>)}
+                        <div className={styles.messagesContainer}>
+                            {messages.length === 0 ? (<p className={styles.emptyMessage}>
+                                Нет сообщений. Начните диалог!
+                            </p>) : (messages.map((msg) => (<div
+                                key={msg.id}
+                                className={`${styles.message} ${msg.senderId === user.id ? styles.myMessage : styles.theirMessage}`}
+                            >
+                                <div className={styles.messageContent}>{msg.content}</div>
+                                <div className={styles.messageTime}>
+                                    {new Date(msg.createdAt).toLocaleString("ru-RU", {
+                                        day: "2-digit",
+                                        month: "2-digit",
+                                        hour: "2-digit",
+                                        minute: "2-digit",
+                                    })}
+                                </div>
+                            </div>)))}
+                            <div ref={messagesEndRef}/>
+                        </div>
+                        <form className={styles.inputForm} onSubmit={handleSend}>
+                            <input
+                                type="text"
+                                value={newMessage}
+                                onChange={(e) => setNewMessage(e.target.value)}
+                                placeholder="Введите сообщение..."
+                                className={styles.messageInput}
+                            />
+                            <button type="submit" className={styles.sendButton} aria-label="Отправить">
+                                <span className={styles.sendButtonText}>Отправить</span>
+                                <span className={styles.sendButtonIcon} aria-hidden="true">➤</span>
+                            </button>
+                        </form>
+                    </div>)}
+            </div>
+        </main>
+        <Footer/>
+    </div>);
 }

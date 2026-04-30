@@ -127,6 +127,10 @@
   cursor: pointer;
 }
 
+.checkboxGroup a {
+  color: #ef5a6f;
+}
+
 .submitButton {
   width: 100%;
   padding: 14px;

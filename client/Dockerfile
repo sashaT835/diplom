@@ -10,14 +10,6 @@ RUN bun install --frozen-lockfile
 # Копируем исходники
 COPY . .
 
-# Build-time env vars for Vite
-ARG VITE_API_URL=/api
-ARG VITE_BACKEND_URL=
-ARG VITE_WS_URL=
-ENV VITE_API_URL=$VITE_API_URL
-ENV VITE_BACKEND_URL=$VITE_BACKEND_URL
-ENV VITE_WS_URL=$VITE_WS_URL
-
 # Собираем production build
 RUN bun run build
 

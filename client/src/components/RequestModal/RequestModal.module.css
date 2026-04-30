@@ -103,6 +103,30 @@
   min-height: 100px;
 }
 
+.checkboxGroup {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.checkboxGroup input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  margin-top: 3px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.checkboxGroup label {
+  font-size: 13px;
+  line-height: 1.5;
+  color: #666;
+}
+
+.checkboxGroup a {
+  color: #e63946;
+}
+
 .submitButton {
   background-color: #e63946;
   color: white;
