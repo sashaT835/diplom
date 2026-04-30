@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import styles from "./RequestModal.module.css";
+import {sendToRequest} from "../../api/request.js";
 
 export default function RequestModal({ isOpen, onClose, serviceName }) {
   const [formData, setFormData] = useState({
@@ -68,18 +69,9 @@ export default function RequestModal({ isOpen, onClose, serviceName }) {
 
     try {
       const { agree, ...requestPayload } = formData;
-      const response = await fetch(`${API_BASE_URL}/requests`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          ...requestPayload,
-          serviceName,
-        }),
-      });
+      const response = await sendToRequest(requestPayload, serviceName);
 
-      if (response.ok) {
+      if (response) {
         setSubmitStatus({
           type: "success",
           message: "Заявка успешно отправлена!",

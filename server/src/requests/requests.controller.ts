@@ -35,7 +35,7 @@ export class RequestsController {
       return await this.requestsService.sendRequest(createRequestDto);
     } catch (error) {
       throw new HttpException(
-        "Ошибка отправки заявки в Telegram",
+        "Ошибка отправки заявки в VK",
         HttpStatus.INTERNAL_SERVER_ERROR
       );
     }
