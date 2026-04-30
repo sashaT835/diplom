@@ -10,6 +10,16 @@
   margin-bottom: 20px;
 }
 
+.breadcrumbs a {
+  color: #999;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.breadcrumbs a:hover {
+  color: var(--color-accent);
+}
+
 .breadcrumbs .active {
   color: var(--color-accent);
 }

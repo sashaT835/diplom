@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useServices } from "../../../../hooks/useServices";
 import RequestModal from "../../../../components/RequestModal/RequestModal";
 import styles from "./ServicesContent.module.css";
+import {Link} from "react-router-dom";
 
 export default function ServicesContent() {
   const { services, loading, error } = useServices();
@@ -42,7 +43,8 @@ export default function ServicesContent() {
     <div className={styles.wrapper}>
       <div className="container">
         <div className={styles.breadcrumbs}>
-          <span>Главная</span> &gt;{" "}
+          <Link to="/">Главная</Link>
+          <span> &gt; </span>
           <span className={styles.active}>Услуги</span>
         </div>
 

@@ -6,6 +6,7 @@ import {useProducts} from "../../../../hooks/useProducts";
 import {getCart} from "../../../../api/cart";
 import {useAuth} from "../../../../contexts/AuthContext";
 import styles from "./CatalogContent.module.css";
+import {Link, useNavigate} from "react-router-dom";
 
 const categories = [
     "Бухгалтерский учет",
@@ -26,6 +27,7 @@ const priceRanges = [
 export default function CatalogContent() {
     const {products, loading, error} = useProducts();
     const {isAuthenticated} = useAuth();
+    const navigate = useNavigate();
     const [selectedCategories, setSelectedCategories] = useState([]);
     const [selectedPriceRanges, setSelectedPriceRanges] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
@@ -109,7 +111,8 @@ export default function CatalogContent() {
         <div className={styles.catalogContent}>
             <div className="container">
                 <div className={styles.breadcrumbs}>
-                    <span>Главная</span> &gt;{" "}
+                    <Link to="/">Главная</Link>
+                    <span> &gt; </span>
                     <span className={styles.active}>Каталог</span>
                 </div>
 

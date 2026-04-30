@@ -10,6 +10,7 @@ import AnalyticsTab from "./components/AnalyticsTab";
 import UsersTab from "./components/UsersTab";
 import toast from "react-hot-toast";
 import styles from "./AdminPage.module.css";
+import {API_BASE_URL, BACKEND_BASE_URL} from "../../config/api.js";
 
 export default function AdminPage() {
   const navigate = useNavigate();
@@ -241,7 +242,6 @@ export default function AdminPage() {
         },
         body: JSON.stringify(dataToSend),
       });
-
       if (response.ok) {
         toast.success(isCreating ? "Создано успешно" : "Обновлено успешно");
         setEditingItem(null);
