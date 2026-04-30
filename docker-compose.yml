@@ -3,12 +3,14 @@ services:
     image: postgres:15-alpine
     container_name: diplom1c_db
     restart: unless-stopped
+    cpus: "1.0"
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: Titan
-    ports:
-      - "5433:5432"
+    mem_limit: 1400m
+    mem_reservation: 384m
+    memswap_limit: 2g
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -16,6 +18,13 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    command: >
+      postgres
+      -c shared_buffers=256MB
+      -c effective_cache_size=1GB
+      -c work_mem=8MB
+      -c maintenance_work_mem=128MB
+      -c max_connections=50
 
   server:
     build:
@@ -32,6 +41,9 @@ services:
       BASE_URL: http://186.246.3.13:3001
       VK_TOKEN: vk1.a.pqQ5McNGk2eUF4csQJpJq9zlbtl1piRvkaINqtMbygpTxwo_-qCzX3O0JRQhkRYJZawccbBoih93qNSCgiFiHbRbttPmXwqBvogDgNR8wSqYce6XTevxpuAFbPY6Li3gETeMMknMFfvFxLSm_9Uygpa6MV7-dCoMRRjVKJm0Z-baAhACItnxLobAPMdMx74oBxZQubqQ__9qFogx3JUG1Q
       VK_API_VERSION: 5.131
+    cpus: "0.8"
+    mem_limit: 1200m
+    mem_reservation: 256m
     depends_on:
       db:
         condition: service_healthy
@@ -46,8 +58,6 @@ services:
     restart: unless-stopped
     ports:
       - "80:80"
-    environment:
-      VITE_API_URL: http://186.246.3.13:3001
     depends_on:
       - server
 
