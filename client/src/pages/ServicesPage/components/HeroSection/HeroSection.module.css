@@ -19,6 +19,8 @@
   padding-bottom: 100px;
   min-height: 100vh;
   position: relative;
+  display: flex;
+  align-items: center;
 }
 
 .content {
@@ -27,21 +29,25 @@
 }
 
 .title {
+  max-width: 70%;
   font-family: var(--font-body);
   font-weight: 400;
-  font-size: 46px;
-  line-height: 140%;
-  color: #fff;
-  margin: 0 0 20px 0;
+  font-style: Regular;
+  font-size: 52px;
+  color: var(--color-white);
+  margin-left: 0;
 }
 
 .subtitle {
+  max-width: 70%;
   font-family: var(--font-body);
   font-weight: 400;
-  font-size: 20px;
-  line-height: 140%;
-  color: #fff;
-  margin: 0;
+  font-style: Regular;
+  font-size: 24px;
+  color: var(--color-white);
+  margin-top: 20px;
+  margin-bottom: 100px;
+  margin-left: 0;
 }
 
 .buttonWrapper {
@@ -57,11 +63,13 @@
   }
 
   .title {
+    max-width: 85%;
     font-size: 42px;
   }
 
   .subtitle {
-    font-size: 18px;
+    max-width: 85%;
+    font-size: 20px;
   }
 }
 
@@ -74,11 +82,14 @@
   }
 
   .title {
+    max-width: 100%;
     font-size: 32px;
   }
 
   .subtitle {
-    font-size: 16px;
+    max-width: 100%;
+    font-size: 18px;
+    margin-top: 16px;
   }
 }
 
@@ -94,6 +105,6 @@
   }
 
   .subtitle {
-    font-size: 14px;
+    font-size: 16px;
   }
 }

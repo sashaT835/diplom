@@ -112,7 +112,7 @@ export default function ContactsContent() {
 
         <div className={styles.mapWrapper}>
           <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d411.4605175711933!2d55.136327023584!3d51.82485450493968!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x417bf7585b154ed9%3A0x17db11582633e272!2z0JHQtdGA0LXQt9C60LAgMi81!5e0!3m2!1sru!2sru!4v1777543448076!5m2!1sru!2sru"
+              src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d1232.9767201854572!2d55.13544679873487!3d51.82528099373864!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zNTHCsDQ5JzMxLjAiTiA1NcKwMDgnMTIuMCJF!5e0!3m2!1sru!2sru!4v1777544121999!5m2!1sru!2sru"
               className={styles.map}
               style={{border: 0}}
               allowFullScreen=""

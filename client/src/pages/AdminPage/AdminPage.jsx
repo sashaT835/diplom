@@ -265,7 +265,7 @@ export default function AdminPage() {
       </div>
       <div className={styles.container}>
         <div className={styles.breadcrumbs}>
-          <a href="/profile">Профиль</a>
+          <a onClick={() => navigate('/profile')}>Профиль</a>
           <span>/</span>
           <span className={styles.active}>Админ-панель</span>
         </div>

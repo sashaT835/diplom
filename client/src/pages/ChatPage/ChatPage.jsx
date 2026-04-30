@@ -193,7 +193,7 @@ export default function ChatPage() {
         </div>
         <div className={styles.container}>
             <div className={styles.breadcrumbs}>
-                <a href="/profile">Профиль</a>
+                <a onClick={() => navigate('/profile')}>Профиль</a>
                 <span>/</span>
                 <span className={styles.active}>Чат с поддержкой</span>
             </div>
@@ -202,12 +202,12 @@ export default function ChatPage() {
             <div className={styles.chatContainer}>
                 <div className={styles.chatHeaderBar}>
                     <h1>Чат с поддержкой</h1>
-                    <button
-                        className={styles.backButton}
-                        onClick={() => navigate("/profile")}
-                    >
-                        ← Вернуться в профиль
-                    </button>
+                    {/*<button*/}
+                    {/*    className={styles.backButton}*/}
+                    {/*    onClick={() => navigate("/profile")}*/}
+                    {/*>*/}
+                    {/*    ← Вернуться в профиль*/}
+                    {/*</button>*/}
                 </div>
 
                 {user.role === "admin" ? (// Интерфейс для админа
